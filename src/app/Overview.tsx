@@ -1,23 +1,26 @@
 import bgImage from "../assets/images/overview-bg.png";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function Overview() {
-    useEffect(() => {
-        document.title = "Stats4Lulu Overview";
-      }, []);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    document.title = "Stats4Lulu Overview";
+  }, []);
+
   return (
-    <div className="flex h-screen w-full overflow-hidden text-white">
+    <div className="flex flex-col md:flex-row h-auto md:h-screen w-full overflow-y-auto text-white">
       {/* Left Section */}
-      <div className="flex flex-col w-2/3">
+      <div className="flex flex-col w-full md:w-2/3">
         {/* Navbar */}
         <nav
-          className="flex justify-between items-center px-8 py-4 border-b border-white/30"
+          className="flex justify-between items-center px-6 md:px-8 py-4 border-b border-white/30"
           style={{ fontFamily: "Courier New, monospace" }}
         >
-          <h1 className="text-2xl font-bold text-black">
+          <h1 className="text-lg md:text-2xl font-bold text-black">
             Stats4Lulu Official Landing Page
           </h1>
-          <div className="flex gap-8 font-semibold">
+          <div className="flex gap-4 md:gap-8 font-semibold">
             <a
               href="mailto:stats4lulu@gmail.com"
               className="hover:text-blue-200 transition text-black"
@@ -30,7 +33,7 @@ export default function Overview() {
 
         {/* PNG background */}
         <div
-          className="flex justify-center items-center flex-1 gap-8 py-8 bg-cover bg-center relative"
+          className="flex flex-col md:flex-row justify-center items-center flex-1 gap-8 py-8 bg-cover bg-center relative"
           style={{
             backgroundImage: `url(${bgImage})`,
             backgroundRepeat: "no-repeat",
@@ -38,13 +41,13 @@ export default function Overview() {
           }}
         >
           {/* Card 1 */}
-          <div className="relative w-80 h-[85vh] rounded-2xl shadow-lg flex flex-col z-10 overflow-hidden">
+          <div className="relative w-72 md:w-80 h-auto md:h-[85vh] rounded-2xl shadow-lg flex flex-col z-10 overflow-hidden mb-6 md:mb-0">
             <div className="absolute inset-0 bg-white/70 rounded-2xl"></div>
             <div className="relative p-6 flex flex-col gap-4 justify-start h-full">
               {/* Header 1 */}
               <div>
                 <h2
-                  className="text-xl font-bold mb-2"
+                  className="text-lg md:text-xl font-bold mb-2"
                   style={{
                     color: "#395752",
                     fontFamily: "Courier New, monospace",
@@ -65,7 +68,7 @@ export default function Overview() {
               {/* Header 2 */}
               <div className="mt-4">
                 <h2
-                  className="text-xl font-bold mb-2"
+                  className="text-lg md:text-xl font-bold mb-2"
                   style={{
                     color: "#395752",
                     fontFamily: "Courier New, monospace",
@@ -89,12 +92,12 @@ export default function Overview() {
           </div>
 
           {/* Card 2 */}
-          <div className="relative w-80 h-[85vh] rounded-2xl shadow-lg flex flex-col z-10 overflow-hidden">
+          <div className="relative w-72 md:w-80 h-auto md:h-[85vh] rounded-2xl shadow-lg flex flex-col z-10 overflow-hidden">
             <div className="absolute inset-0 bg-white/70 rounded-2xl"></div>
 
             <div className="relative p-6 flex flex-col gap-2 justify-start h-full">
               <h2
-                className="text-xl font-bold mb-2"
+                className="text-lg md:text-xl font-bold mb-2"
                 style={{
                   color: "#395752",
                   fontFamily: "Courier New, monospace",
@@ -117,10 +120,11 @@ export default function Overview() {
         </div>
       </div>
 
-      {/* Top Right Section */}
-      <div className="flex flex-col w-1/3 h-full">
+      {/* Right Section */}
+      <div className="flex flex-col w-full md:w-1/3 h-auto md:h-full">
+        {/* Top Section */}
         <div
-          className="h-[40%] flex flex-col justify-start items-start px-6 py-4 text-left overflow-y-auto"
+          className="h-auto md:h-[40%] flex flex-col justify-start items-start px-6 py-4 text-left overflow-y-auto"
           style={{
             backgroundColor: "#eeeeee",
             fontFamily: "Courier New, monospace",
@@ -150,13 +154,19 @@ export default function Overview() {
           </div>
         </div>
 
-        {/* Bottom Right Section */}
-        <div className="h-[60%] flex justify-center items-center">
+        {/* Bottom Section */}
+        <div className="relative h-auto md:h-[60%] flex justify-center items-center bg-[#f5f5f5]">
+          {isLoading && (
+            <div className="absolute inset-0 flex justify-center items-center bg-[#f5f5f5] text-gray-600 font-mono text-sm z-10">
+              Please wait, loading the latest stats...
+            </div>
+          )}
           <iframe
             src="https://lookerstudio.google.com/embed/reporting/2e58763a-6a44-4843-a177-451c96c2b0b2/page/u35cF"
             width="100%"
-            height="100%"
-            className="border-0 rounded-none"
+            height="400"
+            className="border-0 rounded-none md:h-full"
+            onLoad={() => setIsLoading(false)}
           ></iframe>
         </div>
       </div>
