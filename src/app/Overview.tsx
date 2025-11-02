@@ -12,6 +12,7 @@ export default function Overview() {
   useEffect(() => {
     document.title = "Stats4Lulu Overview";
 
+    // ✅ Fix flickering by using a stable viewport height variable
     const setStableVh = () => {
       const vh = window.innerHeight * 0.01;
       document.documentElement.style.setProperty("--vh", `${vh}px`);
@@ -20,23 +21,25 @@ export default function Overview() {
     const updateHeight = () => {
       const vw = window.innerWidth;
       if (vw < 768) {
-        setIframeHeight(`calc(var(--vh) * 65)`); // 65% of stable viewport
+        setIframeHeight(`calc(var(--vh) * 65)`); // stable height on mobile
       } else if (vw < 1024) {
-        setIframeHeight(`calc(var(--vh) * 60)`); // 60% for tablets
+        setIframeHeight(`calc(var(--vh) * 60)`); // tablet
       } else {
-        setIframeHeight("57vh"); // desktop fixed
+        setIframeHeight("57vh"); // desktop
       }
     };
 
     setStableVh();
     updateHeight();
 
-    window.addEventListener("resize", () => {
+    // 👇 Only run once per orientation/resize, not on scroll
+    const handleResize = () => {
       setStableVh();
       updateHeight();
-    });
+    };
+    window.addEventListener("resize", handleResize);
 
-    return () => window.removeEventListener("resize", updateHeight);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const checkScrollable = () => {
