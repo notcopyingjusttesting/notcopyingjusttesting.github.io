@@ -22,19 +22,19 @@ export default function Overview() {
       if (vw < 375) {
         setIframeHeight(`${vh * 0.50}px`);
       } else if (vw >= 375 && vw < 480) {
-        setIframeHeight(`${vh * 0.55}px`);
+        setIframeHeight(`${vh * 0.40}px`);
       } else if (vw >= 480 && vw < 576) {
-        setIframeHeight(`${vh * 0.55}px`);
+        setIframeHeight(`${vh * 0.40}px`);
       } else if (vw >= 576 && vw < 768) {
-        setIframeHeight(`${vh * 0.55}px`);
+        setIframeHeight(`${vh * 0.53}px`);
       } else if (vw >= 768 && vw < 900) {
-        setIframeHeight(`${vh * 0.55}px`);
+        setIframeHeight(`${vh * 0.53}px`);
       } else if (vw >= 900 && vw < 1024) {
-        setIframeHeight(`${vh * 0.55}px`);
+        setIframeHeight(`${vh * 0.53}px`);
       } else if (vw >= 1024 && vw < 1440) {
-        setIframeHeight(`${vh * 0.55}px`);
+        setIframeHeight(`${vh * 0.53}px`);
       } else {
-        setIframeHeight(`${vh * 0.55}px`);
+        setIframeHeight(`${vh * 0.53}px`);
       }
     });
 
@@ -282,7 +282,7 @@ export default function Overview() {
 
           {/* Official Statement */}
           <div
-            className="relative h-auto md:h-[46%] flex flex-col justify-start items-start text-left bg-[#eeeeee] overflow-hidden"
+            className="relative h-auto md:h-[48%] flex flex-col justify-start items-start text-left bg-[#eeeeee] overflow-hidden"
             style={{ fontFamily: "Courier New, monospace" }}
           >
             <div
