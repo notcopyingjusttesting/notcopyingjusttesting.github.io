@@ -30,9 +30,9 @@ export default function Overview() {
       } else if (vw >= 768 && vw < 900) {
         setIframeHeight(`${vh * 0.40}px`);
       } else if (vw >= 900 && vw < 1024) {
-        setIframeHeight(`${vh * 0.40}px`);
+        setIframeHeight(`${vh * 0.50}px`);
       } else if (vw >= 1024 && vw < 1440) {
-        setIframeHeight(`${vh * 0.40}px`);
+        setIframeHeight(`${vh * 0.50}px`);
       } else {
         setIframeHeight(`${vh * 0.55}px`);
       }
@@ -176,7 +176,7 @@ export default function Overview() {
                   className="text-xl md:text-2xl font-bold mb-2 text-[#36454F]"
                   style={{ fontFamily: "Courier New, monospace" }}
                 >
-                  Collaborations
+                  Collabs
                 </h2>
                 <div className="flex flex-col gap-2">
                   <button className="px-4 py-2 text-white rounded-md bg-[#6a8b88] hover:opacity-90 text-left transition">
@@ -195,7 +195,7 @@ export default function Overview() {
                     className="text-xl md:text-2xl font-bold mb-2 text-[#36454F]"
                     style={{ fontFamily: "Courier New, monospace" }}
                   >
-                    Community Links
+                    Media
                   </h2>
                   <div className="flex flex-col gap-2">
                     <button className="px-4 py-2 text-white rounded-md bg-[#6a8b88] hover:opacity-90 text-left transition">
@@ -236,7 +236,7 @@ export default function Overview() {
                     className="text-xl md:text-2xl font-bold mb-2 text-[#36454F]"
                     style={{ fontFamily: "Courier New, monospace" }}
                   >
-                    Media
+                    Community Links
                   </h2>
                   <div className="flex flex-col gap-2">
                     <button className="px-4 py-2 text-white rounded-md bg-[#36454F] hover:opacity-90 text-left transition">
