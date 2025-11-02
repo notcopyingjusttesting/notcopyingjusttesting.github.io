@@ -18,12 +18,23 @@ export default function Overview() {
       const vw = window.innerWidth;
       const vh = window.innerHeight;
 
-      if (vw < 768) {
-        setIframeHeight(`${vh * 0.65}px`);
-      } else if (vw < 1024) {
-        setIframeHeight(`${vh * 0.60}px`);
+      // Keep LookerStudio iframe height dynamic based on viewport height
+      if (vw < 375) {
+        setIframeHeight(`${vh * 0.50}px`);
+      } else if (vw >= 375 && vw < 480) {
+        setIframeHeight(`${vh * 0.40}px`);
+      } else if (vw >= 480 && vw < 576) {
+        setIframeHeight(`${vh * 0.40}px`);
+      } else if (vw >= 576 && vw < 768) {
+        setIframeHeight(`${vh * 0.40}px`);
+      } else if (vw >= 768 && vw < 900) {
+        setIframeHeight(`${vh * 0.40}px`);
+      } else if (vw >= 900 && vw < 1024) {
+        setIframeHeight(`${vh * 0.40}px`);
+      } else if (vw >= 1024 && vw < 1440) {
+        setIframeHeight(`${vh * 0.40}px`);
       } else {
-        setIframeHeight(`${vh * 0.57}px`);
+        setIframeHeight(`${vh * 0.55}px`);
       }
     });
 
@@ -245,11 +256,14 @@ export default function Overview() {
         </div>
 
         {/* RIGHT SIDE */}
-        <div className="flex flex-col w-full md:w-1/3 h-auto md:h-full" ref={lookerRef}>
+        <div className="flex flex-col w-full md:w-1/3 h-auto md:h-full">
           {/* LookerStudio */}
           <div
             className="relative flex justify-center items-center bg-[#f5f5f5] overflow-hidden"
-            style={{ height: iframeHeight }}
+            style={{
+              height: iframeHeight,
+              overflow: "hidden", // Disable scrolling on mobile
+            }}
           >
             {isLoading && (
               <div className="absolute inset-0 flex justify-center items-center bg-[#f5f5f5] text-gray-600 font-mono text-sm z-10">
@@ -262,6 +276,7 @@ export default function Overview() {
               height="100%"
               className="border-0 rounded-none overflow-hidden"
               onLoad={() => setIsLoading(false)}
+              scrolling="no" // Disable scrolling inside iframe
             ></iframe>
           </div>
 
