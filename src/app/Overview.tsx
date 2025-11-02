@@ -72,13 +72,13 @@ export default function Overview() {
           >
             <div className="flex flex-col text-black">
               <h1
-                className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold"
+                className="text-xl sm:text-xl md:text-2xl lg:text-3xl font-bold"
                 style={{ lineHeight: 1.05 }}
               >
                 Stats4Lulu Official Website
               </h1>
 
-              <div className="flex flex-wrap items-center gap-[0.4rem] text-xs sm:text-sm md:text-base mt-1 font-semibold">
+              <div className="flex flex-wrap items-center gap-[0.4rem] text-sm sm:text-sm md:text-base mt-1 font-semibold">
                 <a
                   href="mailto:stats4lulu@gmail.com"
                   className="hover:text-blue-200 transition whitespace-nowrap"
