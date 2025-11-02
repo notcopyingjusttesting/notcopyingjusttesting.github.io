@@ -12,20 +12,30 @@ export default function Overview() {
   useEffect(() => {
     document.title = "Stats4Lulu Overview";
 
+    const setStableVh = () => {
+      const vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty("--vh", `${vh}px`);
+    };
+
     const updateHeight = () => {
-      const vh = window.innerHeight;
       const vw = window.innerWidth;
       if (vw < 768) {
-        setIframeHeight(`${vh * 0.65}px`);
+        setIframeHeight(`calc(var(--vh) * 65)`); // 65% of stable viewport
       } else if (vw < 1024) {
-        setIframeHeight(`${vh * 0.6}px`);
+        setIframeHeight(`calc(var(--vh) * 60)`); // 60% for tablets
       } else {
-        setIframeHeight("57vh");
+        setIframeHeight("57vh"); // desktop fixed
       }
     };
 
+    setStableVh();
     updateHeight();
-    window.addEventListener("resize", updateHeight);
+
+    window.addEventListener("resize", () => {
+      setStableVh();
+      updateHeight();
+    });
+
     return () => window.removeEventListener("resize", updateHeight);
   }, []);
 
