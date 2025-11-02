@@ -26,13 +26,13 @@ export default function Overview() {
       } else if (vw >= 480 && vw < 576) {
         setIframeHeight(`${vh * 0.40}px`);
       } else if (vw >= 576 && vw < 768) {
-        setIframeHeight(`${vh * 0.50}px`);
+        setIframeHeight(`${vh * 0.55}px`);
       } else if (vw >= 768 && vw < 900) {
-        setIframeHeight(`${vh * 0.50}px`);
+        setIframeHeight(`${vh * 0.55}px`);
       } else if (vw >= 900 && vw < 1024) {
-        setIframeHeight(`${vh * 0.50}px`);
+        setIframeHeight(`${vh * 0.55}px`);
       } else if (vw >= 1024 && vw < 1440) {
-        setIframeHeight(`${vh * 0.50}px`);
+        setIframeHeight(`${vh * 0.55}px`);
       } else {
         setIframeHeight(`${vh * 0.55}px`);
       }
