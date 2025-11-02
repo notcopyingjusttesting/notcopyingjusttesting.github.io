@@ -8,38 +8,28 @@ export default function Overview() {
   const [isScrollable, setIsScrollable] = useState(false);
   const [iframeHeight, setIframeHeight] = useState("60vh");
   const statementRef = useRef<HTMLDivElement>(null);
+  const lookerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     document.title = "Stats4Lulu Overview";
 
-    // ✅ Fix flickering by using a stable viewport height variable
-    const setStableVh = () => {
-      const vh = window.innerHeight * 0.01;
-      document.documentElement.style.setProperty("--vh", `${vh}px`);
-    };
-
-    const updateHeight = () => {
+    // ✅ Keep LookerStudio section always fitting viewport
+    const resizeObserver = new ResizeObserver(() => {
       const vw = window.innerWidth;
+      const vh = window.innerHeight;
+
       if (vw < 768) {
-        setIframeHeight(`calc(var(--vh) * 65)`); // stable height on mobile
+        setIframeHeight(`${vh * 0.65}px`);
       } else if (vw < 1024) {
-        setIframeHeight(`calc(var(--vh) * 60)`); // tablet
+        setIframeHeight(`${vh * 0.60}px`);
       } else {
-        setIframeHeight("57vh"); // desktop
+        setIframeHeight(`${vh * 0.57}px`);
       }
-    };
+    });
 
-    setStableVh();
-    updateHeight();
+    resizeObserver.observe(document.body);
 
-    // 👇 Only run once per orientation/resize, not on scroll
-    const handleResize = () => {
-      setStableVh();
-      updateHeight();
-    };
-    window.addEventListener("resize", handleResize);
-
-    return () => window.removeEventListener("resize", handleResize);
+    return () => resizeObserver.disconnect();
   }, []);
 
   const checkScrollable = () => {
@@ -255,10 +245,10 @@ export default function Overview() {
         </div>
 
         {/* RIGHT SIDE */}
-        <div className="flex flex-col w-full md:w-1/3 h-auto md:h-full">
+        <div className="flex flex-col w-full md:w-1/3 h-auto md:h-full" ref={lookerRef}>
           {/* LookerStudio */}
           <div
-            className="relative flex justify-center items-center bg-[#f5f5f5]"
+            className="relative flex justify-center items-center bg-[#f5f5f5] overflow-hidden"
             style={{ height: iframeHeight }}
           >
             {isLoading && (
@@ -270,7 +260,7 @@ export default function Overview() {
               src="https://lookerstudio.google.com/embed/reporting/2e58763a-6a44-4843-a177-451c96c2b0b2/page/u35cF"
               width="100%"
               height="100%"
-              className="border-0 rounded-none"
+              className="border-0 rounded-none overflow-hidden"
               onLoad={() => setIsLoading(false)}
             ></iframe>
           </div>
