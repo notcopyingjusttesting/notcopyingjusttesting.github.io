@@ -22,9 +22,9 @@ export default function Overview() {
       if (vw < 375) {
         setIframeHeight(`${vh * 0.50}px`);
       } else if (vw >= 375 && vw < 480) {
-        setIframeHeight(`${vh * 0.40}px`);
+        setIframeHeight(`${vh * 0.53}px`);
       } else if (vw >= 480 && vw < 576) {
-        setIframeHeight(`${vh * 0.40}px`);
+        setIframeHeight(`${vh * 0.53}px`);
       } else if (vw >= 576 && vw < 768) {
         setIframeHeight(`${vh * 0.53}px`);
       } else if (vw >= 768 && vw < 900) {
