@@ -109,7 +109,7 @@ export default function Overview() {
 
           {/* Cards Section */}
           <div
-            className="flex flex-col md:flex-row justify-center items-center flex-1 gap-8 py-8 px-4 md:px-8 bg-cover bg-center relative"
+            className="flex flex-col md:flex-row justify-center items-center flex-1 gap-8 pt-12 pb-8 px-4 md:px-8 bg-cover bg-center relative"
             style={{
               backgroundImage: `url(${bgImage})`,
               backgroundRepeat: "no-repeat",
@@ -118,10 +118,10 @@ export default function Overview() {
           >
             {/* Card 1 */}
             <div className="relative w-72 md:w-80 h-auto md:h-[85vh] rounded-2xl shadow-lg flex flex-col z-10 overflow-hidden mb-6 md:mb-0">
-              <div className="absolute inset-0 bg-white/70 rounded-2xl"></div>
+              <div className="absolute inset-0 bg-white/60 rounded-2xl"></div>
               <div className="relative p-6 flex flex-col gap-4 justify-start h-full">
                 <h2
-                  className="text-lg md:text-xl font-bold mb-2 text-[#395752]"
+                  className="text-xl md:text-2xl font-bold mb-2 text-[#36454F]"
                   style={{ fontFamily: "Courier New, monospace" }}
                 >
                   Products
@@ -137,7 +137,7 @@ export default function Overview() {
 
                 <div className="mt-4">
                   <h2
-                    className="text-lg md:text-xl font-bold mb-2 text-[#395752]"
+                    className="text-xl md:text-2xl font-bold mb-2 text-[#36454F]"
                     style={{ fontFamily: "Courier New, monospace" }}
                   >
                     Socials
@@ -159,10 +159,10 @@ export default function Overview() {
 
             {/* Card 2 */}
             <div className="relative w-72 md:w-80 h-auto md:h-[85vh] rounded-2xl shadow-lg flex flex-col z-10 overflow-hidden">
-              <div className="absolute inset-0 bg-white/70 rounded-2xl"></div>
+              <div className="absolute inset-0 bg-white/60 rounded-2xl"></div>
               <div className="relative p-6 flex flex-col gap-4 justify-start h-full">
                 <h2
-                  className="text-lg md:text-xl font-bold mb-2 text-[#395752]"
+                  className="text-xl md:text-2xl font-bold mb-2 text-[#36454F]"
                   style={{ fontFamily: "Courier New, monospace" }}
                 >
                   Collaborations
@@ -181,7 +181,7 @@ export default function Overview() {
 
                 <div className="mt-4">
                   <h2
-                    className="text-lg md:text-xl font-bold mb-2 text-[#395752]"
+                    className="text-xl md:text-2xl font-bold mb-2 text-[#36454F]"
                     style={{ fontFamily: "Courier New, monospace" }}
                   >
                     Community Links
@@ -200,10 +200,10 @@ export default function Overview() {
 
             {/* Card 3 */}
             <div className="relative w-72 md:w-80 h-auto md:h-[85vh] rounded-2xl shadow-lg flex flex-col z-10 overflow-hidden">
-              <div className="absolute inset-0 bg-white/70 rounded-2xl"></div>
+              <div className="absolute inset-0 bg-white/60 rounded-2xl"></div>
               <div className="relative p-6 flex flex-col gap-4 justify-start h-full">
                 <h2
-                  className="text-lg md:text-xl font-bold mb-2 text-[#395752]"
+                  className="text-xl md:text-2xl font-bold mb-2 text-[#36454F]"
                   style={{ fontFamily: "Courier New, monospace" }}
                 >
                   Official Links
@@ -222,7 +222,7 @@ export default function Overview() {
 
                 <div className="mt-4">
                   <h2
-                    className="text-lg md:text-xl font-bold mb-2 text-[#395752]"
+                    className="text-xl md:text-2xl font-bold mb-2 text-[#36454F]"
                     style={{ fontFamily: "Courier New, monospace" }}
                   >
                     Media
