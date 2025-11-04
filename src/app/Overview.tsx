@@ -8,7 +8,6 @@ export default function Overview() {
   const [isScrollable, setIsScrollable] = useState(false);
   const [iframeHeight, setIframeHeight] = useState("60vh");
   const statementRef = useRef<HTMLDivElement>(null);
-  const lookerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     document.title = "Stats4Lulu Overview";
@@ -78,18 +77,18 @@ export default function Overview() {
         <div className="flex flex-col w-full md:w-2/3">
           {/* Navbar */}
           <nav
-            className="flex justify-between items-start px-4 md:px-6 py-4 border-b border-white/30 min-w-0"
+            className="flex justify-between items-start px-4 md:px-6 py-2 border-b border-white/30 min-w-0"
             style={{ fontFamily: "Courier New, monospace" }}
           >
             <div className="flex flex-col text-black">
               <h1
-                className="text-xl sm:text-xl md:text-2xl lg:text-3xl font-bold"
+                className="text-xl sm:text-lg md:text-xl lg:text-3xl font-bold"
                 style={{ lineHeight: 1.05 }}
               >
                 Stats4Lulu Official Website
               </h1>
 
-              <div className="flex flex-wrap items-center gap-[0.4rem] text-sm sm:text-sm md:text-base mt-1 font-semibold">
+              <div className="flex flex-wrap items-center gap-[0.4rem] text-sm sm:text-sm md:text-base mt-1 font-semibold italic text-black/75">
                 <a
                   href="mailto:stats4lulu@gmail.com"
                   className="hover:text-blue-200 transition whitespace-nowrap"
@@ -119,140 +118,124 @@ export default function Overview() {
           </nav>
 
           {/* Cards Section */}
-          <div
-            className="flex flex-col md:flex-row justify-center items-center flex-1 gap-8 pt-12 pb-8 px-4 md:px-8 bg-cover bg-center relative"
-            style={{
-              backgroundImage: `url(${bgImage})`,
-              backgroundRepeat: "no-repeat",
-              backgroundSize: "cover",
-            }}
-          >
-            {/* Card 1 */}
-            <div className="relative w-72 md:w-80 h-auto md:h-[85vh] rounded-2xl shadow-lg flex flex-col z-10 overflow-hidden mb-6 md:mb-0">
-              <div className="absolute inset-0 bg-white/60 rounded-2xl"></div>
-              <div className="relative p-6 flex flex-col gap-4 justify-start h-full">
-                <h2
-                  className="text-xl md:text-2xl font-bold mb-2 text-[#36454F]"
-                  style={{ fontFamily: "Courier New, monospace" }}
+          {/* Cards Section */}
+<div
+  className="flex flex-col md:flex-row justify-center items-center flex-1 gap-8 pt-12 pb-8 px-4 md:px-8 bg-cover bg-center relative"
+  style={{
+    backgroundImage: `url(${bgImage})`,
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
+  }}
+>
+  {/* Shared card base styles */}
+  {[
+    {
+      title: "Products",
+      color: "#395752",
+      sections: [
+        {
+          name: "Products",
+          links: [
+            ["Dashboard", "https://lookerstudio.google.com/reporting/f8ea035e-9a51-498e-b77c-ec1b971eada0/page/p_6tpp4q8xrd?s=smgrVIDQwas"],
+            ["Dashboard [Translated]", "https://lookerstudio.google.com/reporting/d603a7eb-4bb9-4231-973f-05b71e24d3a2/page/p_unct2t61td?s=qXhVAmCmFZM"],
+            ["Luigi Mangione Event Timeline", "https://stats4lulu.github.io/"],
+            ["Datasets [Google Sheets]", "https://docs.google.com/spreadsheets/d/1G9y8kqV5iUs6NhkQtEHvHhxasbp5mXq-IkXRKNBTiVA/edit?usp=drivesdk"],
+            ["Datasets [Kaggle]", "https://www.kaggle.com/stats4lulu/datasets"],
+          ],
+        },
+        {
+          name: "Socials",
+          links: [
+            ["Instagram", "https://www.instagram.com/stats4lulu/"],
+            ["X", "https://x.com/stats4lulu"],
+            ["Tumblr", "https://www.tumblr.com/stats4lulu"],
+            ["Reddit", "https://www.reddit.com/user/stats4lulu/"],
+            ["Threads", "https://www.threads.com/@stats4lulu/"],
+            ["Bluesky", "https://bsky.app/profile/stats4lulu.bsky.social"],
+          ],
+        },
+      ],
+    },
+    {
+      title: "Collabs",
+      color: "#6a8b88",
+      sections: [
+        {
+          name: "Collabs",
+          links: [
+            ["Postcards with @postersformangione", "https://linktr.ee/posters_stats_lnm"],
+            ["Donation Guide with @TheLuigiCaseFiles", "https://www.instagram.com/p/DLxLB_-RMUl/?igsh=bjN1ZXI3YXVnMXBs"],
+            ["Multilingual Printables with @MavericksWithMangione", "https://www.instagram.com/p/DM3u3ijsoM0/?igsh=cDNxeTdyMWtma3dn"],
+          ],
+        },
+        {
+          name: "Media",
+          links: [
+            ["NY Defense Motion [page 5]", "https://cdn.sanity.io/files/detu0qji/production/667882212ac2c73a724fadcda417e50352de6303.pdf"],
+            ["TMZ", "https://www.tmz.com/2025/09/04/luigi-mangione-shein-ad-from-chinese-fans/"],
+          ],
+        },
+      ],
+    },
+    {
+      title: "Official Links",
+      color: "#36454F",
+      sections: [
+        {
+          name: "Official Links",
+          links: [
+            ["Official Case Website", "https://www.luigimangioneinfo.com/"],
+            ["Legal Defense Fund", "https://www.givesendgo.com/legalfund-ceo-shooting-suspect"],
+          ],
+        },
+        {
+          name: "Community Links",
+          links: [
+            ["Party Girls Podcast", "https://fans.fm/partygirls"],
+            ["Rights Violations Tracker", "https://lookerstudio.google.com/u/0/reporting/af469363-3940-4305-8da7-8a183ca7ec3e/page/0umZF?s=ohfjbuftRe4"],
+            ["The Plot Newspaper", "https://linktr.ee/theplotnews"],
+            ["Luigi Case Collection", "https://luigicasecollection.wordpress.com/"],
+            ["Luigi's Legal Fund Bookshop", "https://linktr.ee/luigislegalfundbookshop"],
+          ],
+        },
+      ],
+    },
+  ].map((card, i) => (
+    <div
+      key={i}
+      className="relative w-72 md:w-80 h-auto md:h-[84vh] rounded-2xl shadow-lg flex flex-col z-10 overflow-hidden mb-6 md:mb-0"
+    >
+      <div className="absolute inset-0 bg-white/60 rounded-2xl"></div>
+
+      {/* Scrollable area */}
+      <div className="relative pt-4 px-6 pb-6 flex flex-col h-full overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-transparent hover:scrollbar-thumb-gray-500">
+        {card.sections.map((section, idx) => (
+          <div key={idx} className={`${idx > 0 ? "mt-4" : ""}`}>
+            <h2
+              className="text-lg md:text-xl font-bold mb-2 text-[#36454F]"
+              style={{ fontFamily: "Courier New, monospace" }}
+            >
+              {section.name}
+            </h2>
+            <div className="flex flex-col gap-2">
+              {section.links.map(([text, link], j) => (
+                <button
+                  key={j}
+                  onClick={() => window.open(link, "_blank", "noopener,noreferrer")}
+                  className={`px-4 py-1.5 text-white rounded-md hover:opacity-90 text-center transition w-full cursor-pointer break-words`}
+                  style={{ backgroundColor: card.color }}
                 >
-                  Products
-                </h2>
-                <div className="flex flex-col gap-2">
-                  <button className="px-4 py-2 text-white rounded-md bg-[#395752] hover:opacity-90 text-left transition">
-                    Link1
-                  </button>
-                  <button className="px-4 py-2 text-white rounded-md bg-[#395752] hover:opacity-90 text-left transition">
-                    Link2
-                  </button>
-                </div>
-
-                <div className="mt-4">
-                  <h2
-                    className="text-xl md:text-2xl font-bold mb-2 text-[#36454F]"
-                    style={{ fontFamily: "Courier New, monospace" }}
-                  >
-                    Socials
-                  </h2>
-                  <div className="flex flex-col gap-2">
-                    <button className="px-4 py-2 text-white rounded-md bg-[#395752] hover:opacity-90 text-left transition">
-                      bla
-                    </button>
-                    <button className="px-4 py-2 text-white rounded-md bg-[#395752] hover:opacity-90 text-left transition">
-                      blabla
-                    </button>
-                    <button className="px-4 py-2 text-white rounded-md bg-[#395752] hover:opacity-90 text-left transition">
-                      bla x3
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Card 2 */}
-            <div className="relative w-72 md:w-80 h-auto md:h-[85vh] rounded-2xl shadow-lg flex flex-col z-10 overflow-hidden">
-              <div className="absolute inset-0 bg-white/60 rounded-2xl"></div>
-              <div className="relative p-6 flex flex-col gap-4 justify-start h-full">
-                <h2
-                  className="text-xl md:text-2xl font-bold mb-2 text-[#36454F]"
-                  style={{ fontFamily: "Courier New, monospace" }}
-                >
-                  Collabs
-                </h2>
-                <div className="flex flex-col gap-2">
-                  <button className="px-4 py-2 text-white rounded-md bg-[#6a8b88] hover:opacity-90 text-left transition">
-                    link1
-                  </button>
-                  <button className="px-4 py-2 text-white rounded-md bg-[#6a8b88] hover:opacity-90 text-left transition">
-                    link2
-                  </button>
-                  <button className="px-4 py-2 text-white rounded-md bg-[#6a8b88] hover:opacity-90 text-left transition">
-                    etc.
-                  </button>
-                </div>
-
-                <div className="mt-4">
-                  <h2
-                    className="text-xl md:text-2xl font-bold mb-2 text-[#36454F]"
-                    style={{ fontFamily: "Courier New, monospace" }}
-                  >
-                    Media
-                  </h2>
-                  <div className="flex flex-col gap-2">
-                    <button className="px-4 py-2 text-white rounded-md bg-[#6a8b88] hover:opacity-90 text-left transition">
-                      linkk 1
-                    </button>
-                    <button className="px-4 py-2 text-white rounded-md bg-[#6a8b88] hover:opacity-90 text-left transition">
-                      link 2
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Card 3 */}
-            <div className="relative w-72 md:w-80 h-auto md:h-[85vh] rounded-2xl shadow-lg flex flex-col z-10 overflow-hidden">
-              <div className="absolute inset-0 bg-white/60 rounded-2xl"></div>
-              <div className="relative p-6 flex flex-col gap-4 justify-start h-full">
-                <h2
-                  className="text-xl md:text-2xl font-bold mb-2 text-[#36454F]"
-                  style={{ fontFamily: "Courier New, monospace" }}
-                >
-                  Official Links
-                </h2>
-                <div className="flex flex-col gap-2">
-                  <button className="px-4 py-2 text-white rounded-md bg-[#36454F] hover:opacity-90 text-left transition">
-                    link1
-                  </button>
-                  <button className="px-4 py-2 text-white rounded-md bg-[#36454F] hover:opacity-90 text-left transition">
-                    link2
-                  </button>
-                  <button className="px-4 py-2 text-white rounded-md bg-[#36454F] hover:opacity-90 text-left transition">
-                    link3
-                  </button>
-                </div>
-
-                <div className="mt-4">
-                  <h2
-                    className="text-xl md:text-2xl font-bold mb-2 text-[#36454F]"
-                    style={{ fontFamily: "Courier New, monospace" }}
-                  >
-                    Community Links
-                  </h2>
-                  <div className="flex flex-col gap-2">
-                    <button className="px-4 py-2 text-white rounded-md bg-[#36454F] hover:opacity-90 text-left transition">
-                      link1
-                    </button>
-                    <button className="px-4 py-2 text-white rounded-md bg-[#36454F] hover:opacity-90 text-left transition">
-                      link2
-                    </button>
-                    <button className="px-4 py-2 text-white rounded-md bg-[#36454F] hover:opacity-90 text-left transition">
-                      link3
-                    </button>
-                  </div>
-                </div>
-              </div>
+                  {text}
+                </button>
+              ))}
             </div>
           </div>
+        ))}
+      </div>
+    </div>
+  ))}
+</div>
+
         </div>
 
         {/* RIGHT SIDE */}
