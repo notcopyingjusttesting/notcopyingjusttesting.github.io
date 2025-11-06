@@ -10,7 +10,7 @@ export default function Overview() {
   const statementRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    document.title = "Stats4Lulu Overview";
+    document.title = "Stats4Lulu Official Website";
 
     // ✅ Keep LookerStudio section always fitting viewport
     const resizeObserver = new ResizeObserver(() => {
@@ -18,6 +18,7 @@ export default function Overview() {
       const vh = window.innerHeight;
 
       // Keep LookerStudio iframe height dynamic based on viewport height
+      // idk what im doing here lel
       if (vw < 375) {
         setIframeHeight(`${vh * 0.50}px`);
       } else if (vw >= 375 && vw < 480) {
@@ -87,8 +88,16 @@ export default function Overview() {
               >
                 Stats4Lulu Official Website
               </h1>
+              <h2
+                className="text-sm sm:text-sm md:text-base lg:text-lg font-bold text-black/60"
+                style={{ lineHeight: 1.05 }}
+              >
+                Luigi Mangione data and statistical insights
+              </h2>
 
-              <div className="flex flex-wrap items-center gap-[0.4rem] text-sm sm:text-sm md:text-base mt-1 font-semibold italic text-black/75">
+              <div className="flex flex-wrap items-center gap-[0.4rem] text-sm sm:text-sm md:text-base mt-1 font-semibold italic text-black/75"
+                style={{ lineHeight: 1.05 }}
+              >
                 <a
                   href="mailto:stats4lulu@gmail.com"
                   className="hover:text-blue-200 transition whitespace-nowrap"
@@ -136,11 +145,12 @@ export default function Overview() {
         {
           name: "Products",
           links: [
-            ["Dashboard", "https://lookerstudio.google.com/reporting/f8ea035e-9a51-498e-b77c-ec1b971eada0/page/p_6tpp4q8xrd?s=smgrVIDQwas"],
-            ["Dashboard [Translated]", "https://lookerstudio.google.com/reporting/d603a7eb-4bb9-4231-973f-05b71e24d3a2/page/p_unct2t61td?s=qXhVAmCmFZM"],
+            ["Stats4Lulu Dashboard", "https://lookerstudio.google.com/reporting/f8ea035e-9a51-498e-b77c-ec1b971eada0/page/p_6tpp4q8xrd?s=smgrVIDQwas"],
+            ["Stats4Lulu Dashboard [Translated]", "https://lookerstudio.google.com/reporting/d603a7eb-4bb9-4231-973f-05b71e24d3a2/page/p_unct2t61td?s=qXhVAmCmFZM"],
             ["Luigi Mangione Event Timeline", "https://stats4lulu.github.io/"],
             ["Datasets [Google Sheets]", "https://docs.google.com/spreadsheets/d/1G9y8kqV5iUs6NhkQtEHvHhxasbp5mXq-IkXRKNBTiVA/edit?usp=drivesdk"],
             ["Datasets [Kaggle]", "https://www.kaggle.com/stats4lulu/datasets"],
+            ["Stats4Lulu Postcard", "https://drive.google.com/drive/folders/1MaL0i87axR6M8W8i9NtqZzj7I0pM3CNi"],
           ],
         },
         {
@@ -152,6 +162,7 @@ export default function Overview() {
             ["Reddit", "https://www.reddit.com/user/stats4lulu/"],
             ["Threads", "https://www.threads.com/@stats4lulu/"],
             ["Bluesky", "https://bsky.app/profile/stats4lulu.bsky.social"],
+            ["GitHub", "https://github.com/Stats4Lulu/"],
           ],
         },
       ],
@@ -163,15 +174,15 @@ export default function Overview() {
         {
           name: "Collabs",
           links: [
-            ["Postcards with @postersformangione", "https://linktr.ee/posters_stats_lnm"],
-            ["Donation Guide with @TheLuigiCaseFiles", "https://www.instagram.com/p/DLxLB_-RMUl/?igsh=bjN1ZXI3YXVnMXBs"],
-            ["Multilingual Printables with @MavericksWithMangione", "https://www.instagram.com/p/DM3u3ijsoM0/?igsh=cDNxeTdyMWtma3dn"],
+            ["Postcards with PostersForMangione", "https://linktr.ee/postersformangione?utm_source=linktree_admin_share&fbclid=PAZXh0bgNhZW0CMTEAAaeagCfiEDFMtJ7dz82HniCS2FXXb_rG1jrUjqeSGxuNDah9Ps6KwFp58l0maQ_aem_9StNgNhkzSgjJZKtLzkjJw"],
+            ["Donation Guide with TheLuigiCaseFiles", "https://www.instagram.com/p/DLxLB_-RMUl/?igsh=bjN1ZXI3YXVnMXBs"],
+            ["Multilingual Printables with MavericksWithMangione", "https://www.instagram.com/p/DM3u3ijsoM0/?igsh=cDNxeTdyMWtma3dn"],
           ],
         },
         {
-          name: "Media",
+          name: "Media & Mentions",
           links: [
-            ["NY Defense Motion [page 5]", "https://cdn.sanity.io/files/detu0qji/production/667882212ac2c73a724fadcda417e50352de6303.pdf"],
+            ["NY Defense Motion [cited on p.5]", "https://cdn.sanity.io/files/detu0qji/production/667882212ac2c73a724fadcda417e50352de6303.pdf"],
             ["TMZ", "https://www.tmz.com/2025/09/04/luigi-mangione-shein-ad-from-chinese-fans/"],
           ],
         },
@@ -184,15 +195,15 @@ export default function Overview() {
         {
           name: "Official Links",
           links: [
-            ["Official Case Website", "https://www.luigimangioneinfo.com/"],
-            ["Legal Defense Fund", "https://www.givesendgo.com/legalfund-ceo-shooting-suspect"],
+            ["Luigi Mangione Official Website", "https://www.luigimangioneinfo.com/"],
+            ["Luigi Mangione Legal Defense Fund", "https://www.givesendgo.com/luigi-defense-fund"],
           ],
         },
         {
           name: "Community Links",
           links: [
             ["Party Girls Podcast", "https://fans.fm/partygirls"],
-            ["Rights Violations Tracker", "https://lookerstudio.google.com/u/0/reporting/af469363-3940-4305-8da7-8a183ca7ec3e/page/0umZF?s=ohfjbuftRe4"],
+            ["Luigi Mangione Case Tracker", "https://lookerstudio.google.com/u/0/reporting/af469363-3940-4305-8da7-8a183ca7ec3e/page/0umZF?s=ohfjbuftRe4"],
             ["The Plot Newspaper", "https://linktr.ee/theplotnews"],
             ["Luigi Case Collection", "https://luigicasecollection.wordpress.com/"],
             ["Luigi's Legal Fund Bookshop", "https://linktr.ee/luigislegalfundbookshop"],
@@ -222,7 +233,7 @@ export default function Overview() {
                 <button
                   key={j}
                   onClick={() => window.open(link, "_blank", "noopener,noreferrer")}
-                  className={`px-4 py-1.5 text-white rounded-md hover:opacity-90 text-center transition w-full cursor-pointer break-words`}
+                  className={`px-1.5 py-1.5 text-white rounded-md hover:opacity-90 text-center transition w-full cursor-pointer break-words`}
                   style={{ backgroundColor: card.color }}
                 >
                   {text}
@@ -281,13 +292,12 @@ export default function Overview() {
               <div className="text-black text-sm md:text-base leading-relaxed">
                 <p className="mb-2">
                   The Stats4Lulu team has created and maintains an online,
-                  interactive dashboard that shares information about not only
-                  the letters he has received but donations made to his
-                  GiveSendGo campaign to fund his legal cases, Google search
-                  trends, and top news articles relating to Luigi. This
-                  dashboard is translated into 8 languages: Italian, Spanish,
-                  French, Brazilian Portuguese, German, Simplified Chinese, and
-                  Traditional Chinese.
+                  interactive dashboard on Luigi Mangione that shares information
+                  about not only the letters he has received but donations made to
+                  his GiveSendGo campaign to fund his legal cases, and top news 
+                  articles relating to Luigi. This dashboard is translated into 8 
+                  languages: Italian, Spanish, French, Brazilian Portuguese, German, 
+                  Simplified Chinese, and Traditional Chinese.
                 </p>
                 <p>
                   The team currently stands at over 30 volunteers working across
