@@ -89,7 +89,7 @@ export default function Overview() {
                 Stats4Lulu Official Website
               </h1>
               <h2
-                className="font-mono text-sm sm:text-sm md:text-base lg:text-lg text-black/60"
+                className="font-mono text-sm sm:text-sm md:text-base lg:text-base text-black/60"
                 style={{ lineHeight: 1.05 }}
               >
                 Luigi Mangione data and statistical insights
