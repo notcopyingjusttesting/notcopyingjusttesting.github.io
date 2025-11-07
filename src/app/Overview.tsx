@@ -8,14 +8,19 @@ export default function Overview() {
   const [isScrollable, setIsScrollable] = useState(false);
   const [iframeHeight, setIframeHeight] = useState("60vh");
 
-  // Fade states
-  const [bgLoaded, setBgLoaded] = useState(false); // triggers when image is fully loaded
-  const [showPrimary, setShowPrimary] = useState(false);   // Navbar + background
-  const [showSecondary, setShowSecondary] = useState(false); // Cards + right side
+  const [showPrimary, setShowPrimary] = useState(false);
+  const [showSecondary, setShowSecondary] = useState(false);
+  const [bgLoaded, setBgLoaded] = useState(false);
+
   const statementRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     document.title = "Stats4Lulu Official Website";
+
+    // preload background image
+    const img = new Image();
+    img.src = bgImage;
+    img.onload = () => setBgLoaded(true);
 
     // Fade-in sequence
     setTimeout(() => setShowPrimary(true), 100);   // show navbar/bgImage first
@@ -26,7 +31,7 @@ export default function Overview() {
       const vw = window.innerWidth;
       const vh = window.innerHeight;
 
-     // Keep LookerStudio iframe height dynamic based on viewport height
+      // Keep LookerStudio iframe height dynamic based on viewport height
       // idk what im doing here lel
       if (vw < 375) {
         setIframeHeight(`${vh * 0.50}px`);
@@ -89,17 +94,9 @@ export default function Overview() {
             showPrimary ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
           }`}
         >
-          {/* Hidden image preloader */}
-          <img
-            src={bgImage}
-            alt=""
-            className="hidden"
-            onLoad={() => setBgLoaded(true)}
-          />
-
           {/* Navbar */}
           <nav
-            className="relative flex justify-between items-start px-4 md:px-6 py-2 border-b border-white/30 min-w-0 z-10"
+            className="flex justify-between items-start px-4 md:px-6 py-2 border-b border-white/30 min-w-0"
             style={{ fontFamily: "Courier New, monospace" }}
           >
             <div className="flex flex-col text-black">
@@ -149,7 +146,9 @@ export default function Overview() {
           </nav>
 
           <div
-            className="flex flex-col md:flex-row justify-center items-center flex-1 gap-8 pt-12 pb-8 px-4 md:px-8 bg-cover bg-center relative transition-all duration-700 ease-out"
+            className={`flex flex-col md:flex-row justify-center items-center flex-1 gap-8 pt-12 pb-8 px-4 md:px-8 bg-center relative transition-opacity duration-1000 ease-out ${
+              bgLoaded ? "opacity-100" : "opacity-0"
+            }`}
             style={{
               backgroundImage: `url(${bgImage})`,
               backgroundRepeat: "no-repeat",
@@ -263,7 +262,10 @@ export default function Overview() {
                         "Luigi Mangione Case Tracker",
                         "https://lookerstudio.google.com/u/0/reporting/af469363-3940-4305-8da7-8a183ca7ec3e/page/0umZF?s=ohfjbuftRe4",
                       ],
-                      ["The Plot Newspaper", "https://linktr.ee/theplotnews"],
+                      [
+                        "The Plot Newspaper",
+                        "https://linktr.ee/theplotnews",
+                      ],
                       [
                         "Luigi Case Collection",
                         "https://luigicasecollection.wordpress.com/",
