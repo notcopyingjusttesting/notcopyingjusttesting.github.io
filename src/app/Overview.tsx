@@ -168,11 +168,7 @@ export default function Overview() {
                         "https://stats4lulu.github.io/",
                       ],
                       [
-                        "Datasets [Google Sheets]",
-                        "https://docs.google.com/spreadsheets/d/1G9y8kqV5iUs6NhkQtEHvHhxasbp5mXq-IkXRKNBTiVA/edit?usp=drivesdk",
-                      ],
-                      [
-                        "Datasets [Kaggle]",
+                        "Datasets",
                         "https://www.kaggle.com/stats4lulu/datasets",
                       ],
                       [
@@ -243,6 +239,10 @@ export default function Overview() {
                       [
                         "Luigi Mangione Legal Defense Fund",
                         "https://www.givesendgo.com/luigi-defense-fund",
+                      ],
+                      [
+                        "Write to Luigi Mangione",
+                        "https://www.luigimangioneinfo.com/pages/faq/",
                       ],
                     ],
                   },
