@@ -8,7 +8,8 @@ export default function Overview() {
   const [isScrollable, setIsScrollable] = useState(false);
   const [iframeHeight, setIframeHeight] = useState("60vh");
 
-  // Fade state controls
+  // Fade states
+  const [bgLoaded, setBgLoaded] = useState(false); // triggers when image is fully loaded
   const [showPrimary, setShowPrimary] = useState(false);   // Navbar + background
   const [showSecondary, setShowSecondary] = useState(false); // Cards + right side
   const statementRef = useRef<HTMLDivElement>(null);
@@ -25,7 +26,7 @@ export default function Overview() {
       const vw = window.innerWidth;
       const vh = window.innerHeight;
 
-      // Keep LookerStudio iframe height dynamic based on viewport height
+     // Keep LookerStudio iframe height dynamic based on viewport height
       // idk what im doing here lel
       if (vw < 375) {
         setIframeHeight(`${vh * 0.50}px`);
@@ -88,9 +89,17 @@ export default function Overview() {
             showPrimary ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
           }`}
         >
+          {/* Hidden image preloader */}
+          <img
+            src={bgImage}
+            alt=""
+            className="hidden"
+            onLoad={() => setBgLoaded(true)}
+          />
+
           {/* Navbar */}
           <nav
-            className="flex justify-between items-start px-4 md:px-6 py-2 border-b border-white/30 min-w-0"
+            className="relative flex justify-between items-start px-4 md:px-6 py-2 border-b border-white/30 min-w-0 z-10"
             style={{ fontFamily: "Courier New, monospace" }}
           >
             <div className="flex flex-col text-black">
@@ -254,10 +263,7 @@ export default function Overview() {
                         "Luigi Mangione Case Tracker",
                         "https://lookerstudio.google.com/u/0/reporting/af469363-3940-4305-8da7-8a183ca7ec3e/page/0umZF?s=ohfjbuftRe4",
                       ],
-                      [
-                        "The Plot Newspaper",
-                        "https://linktr.ee/theplotnews",
-                      ],
+                      ["The Plot Newspaper", "https://linktr.ee/theplotnews"],
                       [
                         "Luigi Case Collection",
                         "https://luigicasecollection.wordpress.com/",
