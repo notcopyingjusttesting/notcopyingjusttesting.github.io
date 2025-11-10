@@ -88,7 +88,7 @@ export default function Overview() {
   return (
     <div className="flex flex-col w-full h-auto overflow-y-auto text-white">
       <div className="flex flex-col md:flex-row w-full h-auto md:h-screen">
-        {/* LEFT SIDE */}
+        {/* Left side */}
         <div
           className={`flex flex-col w-full md:w-2/3 transition-all duration-700 ease-out ${
             showPrimary ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
@@ -144,7 +144,8 @@ export default function Overview() {
               </div>
             </div>
           </nav>
-
+          
+          {/* Cards */}
           <div
             className={`flex flex-col md:flex-row justify-center items-center flex-1 gap-8 pt-12 pb-8 px-4 md:px-8 bg-center relative transition-opacity duration-1000 ease-out ${
               bgLoaded ? "opacity-100" : "opacity-0"
@@ -170,10 +171,6 @@ export default function Overview() {
                       [
                         "Stats4Lulu Dashboard [Translated]",
                         "https://lookerstudio.google.com/reporting/d603a7eb-4bb9-4231-973f-05b71e24d3a2/page/p_unct2t61td?s=qXhVAmCmFZM",
-                      ],
-                      [
-                        "Luigi Mangione Event Timeline",
-                        "https://stats4lulu.github.io/",
                       ],
                       [
                         "Datasets",
@@ -204,6 +201,10 @@ export default function Overview() {
                   {
                     name: "Collabs",
                     links: [
+                      [
+                        "Luigi Mangione Event Timeline with Luigistics",
+                        "https://stats4lulu.github.io/#/timeline"
+                      ],
                       [
                         "Postcards with Posters for Mangione",
                         "https://linktr.ee/postersformangione",
@@ -245,7 +246,7 @@ export default function Overview() {
                         "https://www.luigimangioneinfo.com/",
                       ],
                       [
-                        "Luigi Mangione Legal Defense Fund",
+                        "Donate to Luigi Mangione",
                         "https://www.givesendgo.com/luigi-defense-fund",
                       ],
                       [
