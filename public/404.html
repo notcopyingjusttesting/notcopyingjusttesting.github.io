@@ -1,18 +1,14 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <script>
-      // Redirect to index.html while preserving the path
-      var redirectPath = window.location.pathname;
-      var params = window.location.search;
-
-      // Push original path as ?redirect=/path
-      window.location.replace(
-        "/?redirect=" + encodeURIComponent(redirectPath + params)
-      );
+    <meta charset="utf-8" />
+    <title>Redirecting...</title>
+    <script type="text/javascript">
+      // Preserve path and redirect back to index.html
+      const path = window.location.pathname;
+      const newUrl = window.location.origin + "/index.html?redirect=" + path;
+      window.location.replace(newUrl);
     </script>
   </head>
-  <body>
-  </body>
+  <body></body>
 </html>
