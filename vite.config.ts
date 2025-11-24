@@ -6,9 +6,10 @@ import path from 'path'
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   
-  // IMPORTANT: empty base for GitHub Pages root project
-  base: "",
+  // Required for GitHub Pages root-hosted site
+  base: "/",  
 
+  // Required so gh-pages deploy script can find the built folder
   build: {
     outDir: "dist"
   },
