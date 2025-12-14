@@ -64,57 +64,53 @@ export default function Media() {
   const handleButtonClick = (index: number) => {
     const isOpen = active === index;
   
-    // If clicking the already open button, just collapse
     if (isOpen) {
       setActive(null);
       return;
     }
   
-    const prevIndex = active; // the currently open button (if any)
-    setActive(index); // set new active
+    const prevIndex = active;
+    setActive(index);
   
-    const contentEl = contentRefs.current[index];
     const buttonEl = buttonRefs.current[index];
+    const contentEl = contentRefs.current[index];
+    if (!buttonEl || !contentEl) return;
   
-    if (!contentEl || !buttonEl) return;
-  
-    // Helper function to scroll after transition
-    const scrollIntoView = () => {
-      const top = buttonEl.getBoundingClientRect().top + window.scrollY - 20; // optional offset
-      window.scrollTo({ top, behavior: "smooth" });
-    };
-  
+    // Wait for the previous content to collapse, if any
     if (prevIndex !== null) {
-      // Wait for the previous content to collapse
       const prevContentEl = contentRefs.current[prevIndex];
       if (prevContentEl) {
         const onPrevTransitionEnd = (event: TransitionEvent) => {
           if (event.propertyName === "max-height") {
             prevContentEl.removeEventListener("transitionend", onPrevTransitionEnd);
   
-            // Now wait for new content to expand
-            const onNewTransitionEnd = (e: TransitionEvent) => {
-              if (e.propertyName === "max-height") {
-                contentEl.removeEventListener("transitionend", onNewTransitionEnd);
-                scrollIntoView();
-              }
-            };
-            contentEl.addEventListener("transitionend", onNewTransitionEnd);
+            // Wait one frame for new content to expand
+            requestAnimationFrame(() => {
+              // Scroll button into view
+              buttonEl.scrollIntoView({ behavior: "smooth", block: "start" });
+            });
           }
         };
         prevContentEl.addEventListener("transitionend", onPrevTransitionEnd);
+        return;
       }
-    } else {
-      // No previously open button, just wait for new content to expand
-      const onNewTransitionEnd = (e: TransitionEvent) => {
-        if (e.propertyName === "max-height") {
-          contentEl.removeEventListener("transitionend", onNewTransitionEnd);
-          scrollIntoView();
-        }
-      };
-      contentEl.addEventListener("transitionend", onNewTransitionEnd);
     }
+  
+    // No previous content or after collapse
+    const onNewTransitionEnd = (event: TransitionEvent) => {
+      if (event.propertyName === "max-height") {
+        contentEl.removeEventListener("transitionend", onNewTransitionEnd);
+  
+        // Scroll button into view after layout update
+        requestAnimationFrame(() => {
+          buttonEl.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+      }
+    };
+  
+    contentEl.addEventListener("transitionend", onNewTransitionEnd);
   };
+  
   
   
 
