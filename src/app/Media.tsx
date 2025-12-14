@@ -13,7 +13,7 @@ const BUTTONS: ButtonItem[] = [
   { label: "What happens behind the scenes", text: "Content for Button 4" },
   { label: "Community partners", text: "Content for Button 5" },
   { label: "Get involved", text: "Content for Button 6" },
-  { label: "All mentions of Stats4Lulu", text: "Content for Button 7" },
+  { label: "Mentions & media", text: "Content for Button 7" },
 ];
 
 const SEPARATOR_COLORS = [
@@ -22,6 +22,7 @@ const SEPARATOR_COLORS = [
   "#618c88",
   "#476B65",
   "#324D48",
+  "#000000",
   "#000000",
 ];
 
@@ -63,19 +64,19 @@ export default function Media() {
   /* ---------------- MOBILE BUTTON CLICK ---------------- */
   const handleButtonClick = (index: number) => {
     const isOpen = active === index;
-  
+
     if (isOpen) {
       setActive(null);
       return;
     }
-  
+
     const prevIndex = active;
     setActive(index);
-  
+
     const buttonEl = buttonRefs.current[index];
     const contentEl = contentRefs.current[index];
     if (!buttonEl || !contentEl) return;
-  
+
     // Wait for the previous content to collapse, if any
     if (prevIndex !== null) {
       const prevContentEl = contentRefs.current[prevIndex];
@@ -83,7 +84,7 @@ export default function Media() {
         const onPrevTransitionEnd = (event: TransitionEvent) => {
           if (event.propertyName === "max-height") {
             prevContentEl.removeEventListener("transitionend", onPrevTransitionEnd);
-  
+
             // Wait one frame for new content to expand
             requestAnimationFrame(() => {
               // Scroll button into view
@@ -95,24 +96,21 @@ export default function Media() {
         return;
       }
     }
-  
+
     // No previous content or after collapse
     const onNewTransitionEnd = (event: TransitionEvent) => {
       if (event.propertyName === "max-height") {
         contentEl.removeEventListener("transitionend", onNewTransitionEnd);
-  
+
         // Scroll button into view after layout update
         requestAnimationFrame(() => {
           buttonEl.scrollIntoView({ behavior: "smooth", block: "start" });
         });
       }
     };
-  
+
     contentEl.addEventListener("transitionend", onNewTransitionEnd);
   };
-  
-  
-  
 
   return (
     <section className="relative w-full min-h-screen bg-white overflow-hidden">
@@ -124,10 +122,10 @@ export default function Media() {
           style={{ fontFamily: "Courier New, monospace" }}
         >
           <h1 className="text-xl font-bold" style={{ lineHeight: 1.05 }}>
-            Stats4Lulu Media Summary Page
+            Stats4Lulu Media Summaries
           </h1>
           <h2 className="font-mono text-sm text-black/60" style={{ lineHeight: 1.05 }}>
-            Official statements from Stats4Lulu, about Stats4Lulu
+            Official statements from the Stats4Lulu team
           </h2>
 
           <div
@@ -158,7 +156,9 @@ export default function Media() {
             return (
               <div key={item.label}>
                 <button
-                  ref={(el) => (buttonRefs.current[index] = el)}
+                  ref={(el) => {
+                    buttonRefs.current[index] = el;
+                  }}
                   onClick={() => handleButtonClick(index)}
                   className="w-full px-4 py-5 text-lg font-mono bg-[#eeeeee] flex items-center justify-between"
                 >
@@ -166,15 +166,16 @@ export default function Media() {
                   <span className="text-xl">{isOpen ? "v" : ">"}</span>
                 </button>
 
-                {index < BUTTONS.length - 1 && (
-                  <div
-                    className="w-full h-[6px]"
-                    style={{ backgroundColor: SEPARATOR_COLORS[index] }}
-                  />
-                )}
+                {/* Separator immediately after the button */}
+                <div
+                  className="w-full h-[6px]"
+                  style={{ backgroundColor: SEPARATOR_COLORS[index] }}
+                />
 
                 <div
-                  ref={(el) => (contentRefs.current[index] = el)}
+                  ref={(el) => {
+                    contentRefs.current[index] = el;
+                  }}
                   className={`overflow-hidden transition-all duration-300 ease-in-out ${
                     isOpen ? "max-h-[400px]" : "max-h-0"
                   }`}
@@ -200,7 +201,7 @@ export default function Media() {
       <div className="hidden md:block">
         {/* RIGHT IMAGE */}
         <div
-          className="fixed top-0 bottom-0 right-0 z-20 w-1/2 pointer-events-none"
+          className="fixed top-0 bottom-0 right-0 z-20 w-[60%] pointer-events-none"
           style={{ clipPath: "polygon(15% 0, 100% 0, 100% 100%, 0 100%)" }}
         >
           <div
@@ -213,7 +214,7 @@ export default function Media() {
             }}
           />
 
-          <div className="absolute inset-0 flex items-center justify-start px-8 md:px-16">
+          <div className="absolute inset-0 flex items-center justify-start px-8 md:px-20">
             <h2
               className="text-4xl font-serif text-black drop-shadow-lg break-words"
               style={{ maxWidth: "80%", lineHeight: 1.2 }}
@@ -234,16 +235,16 @@ export default function Media() {
           <div className="relative flex justify-start items-start px-4 md:px-6 pt-2 pb-4">
             <div className="flex flex-col text-black max-w-[calc(100%-50vw)]">
               <h1 className="text-xl sm:text-lg md:text-xl lg:text-3xl font-bold" style={{ lineHeight: 1.05 }}>
-                Stats4Lulu Media Summary Page
+                Stats4Lulu Media Summaries
               </h1>
               <h2 className="font-mono text-sm md:text-base text-black/60" style={{ lineHeight: 1.05 }}>
-                Official statements from Stats4Lulu, about Stats4Lulu
+                Official statements from the Stats4Lulu team
               </h2>
 
-              <div className="flex flex-wrap items-center gap-[0.4rem] text-sm md:text-base mt-1 font-semibold italic text-black/75" style={{ lineHeight: 1.05 }}>
-                <a href="mailto:stats4lulu@gmail.com">stats4lulu@gmail.com</a>
+              <div className="flex flex-wrap items-center gap-[0.4rem] text-sm md:text-base mt-1 font-semibold italic text-black/75 " style={{ lineHeight: 1.05 }}>
+                <a href="mailto:stats4lulu@gmail.com" className="hover:text-blue-200">stats4lulu@gmail.com</a>
                 <span className="text-black/40">•</span>
-                <a href="https://discord.gg/hDuuFCtWbk" target="_blank" rel="noopener noreferrer">
+                <a href="https://discord.gg/hDuuFCtWbk" target="_blank" rel="noopener noreferrer" className="hover:text-blue-200">
                   Join our Discord
                 </a>
                 <span className="text-black/40">•</span>
@@ -251,6 +252,7 @@ export default function Media() {
                   href="https://docs.google.com/forms/d/e/1FAIpQLSeLFppQsFajVnM_QrxfphwQ-1EKnUKWgMMfBfga9yX3JkZ_9Q/viewform"
                   target="_blank"
                   rel="noopener noreferrer"
+                  className="hover:text-blue-200"
                 >
                   Bug Reports & Suggestions
                 </a>
@@ -262,7 +264,7 @@ export default function Media() {
         {/* LEFT BUTTON STACK */}
         <div
           className="absolute left-0 z-10 flex flex-col overflow-y-auto"
-          style={{ top: navHeight, bottom: 0, right: "42.5%" }}
+          style={{ top: navHeight, bottom: 0, right: "51.8%" }}
         >
           {BUTTONS.map((item, index) => (
             <div key={item.label}>
@@ -282,6 +284,12 @@ export default function Media() {
               )}
             </div>
           ))}
+          <div
+            className="w-full h-[6px]"
+            style={{
+              backgroundColor: SEPARATOR_COLORS[SEPARATOR_COLORS.length - 1],
+            }}
+          />
         </div>
       </div>
     </section>
