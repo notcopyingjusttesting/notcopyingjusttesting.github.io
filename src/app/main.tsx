@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-route
 import { useEffect } from "react";
 import App from "./App.tsx";
 import Overview from "./Overview.tsx";
+import Media from "./Media.tsx";
 
 /**
  * This component catches redirects from the 404.html fallback
@@ -30,6 +31,7 @@ createRoot(document.getElementById("root")!).render(
       <Routes>
         <Route path="/" element={<Overview />} />
         <Route path="/timeline" element={<App />} />
+        <Route path="/media" element={<Media />} />
       </Routes>
     </Router>
   </StrictMode>
