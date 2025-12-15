@@ -27,7 +27,7 @@ const SEPARATOR_COLORS = [
 ];
 
 export default function Media() {
-  const [active, setActive] = useState<number | null>(null);
+  const [active, setActive] = useState<number>(-1); // Initialize as -1 for mobile (no button selected initially)
   const [navHeight, setNavHeight] = useState(0);
   const [buttonHeight, setButtonHeight] = useState(0);
   const navRef = useRef<HTMLDivElement | null>(null);
@@ -36,7 +36,7 @@ export default function Media() {
   const buttonRefs = useRef<Array<HTMLButtonElement | null>>(BUTTONS.map(() => null));
   const contentRefs = useRef<Array<HTMLDivElement | null>>(BUTTONS.map(() => null));
 
-  /* ---------------- DESKTOP HEIGHT CALC ---------------- */
+  // -------------------- DESKTOP HEIGHT CALC --------------------
   useEffect(() => {
     const updateHeights = () => {
       if (navRef.current) {
@@ -61,33 +61,30 @@ export default function Media() {
     return () => window.removeEventListener("resize", updateHeights);
   }, []);
 
-  /* ---------------- MOBILE BUTTON CLICK ---------------- */
+  // -------------------- MOBILE BUTTON CLICK --------------------
   const handleButtonClick = (index: number) => {
-    const isOpen = active === index;
-
-    if (isOpen) {
-      setActive(null);
-      return;
+    // Handle opening and closing of content on mobile
+    if (active === index) {
+      setActive(-1); // Close the currently active button
+    } else {
+      setActive(index); // Open the new button
     }
 
-    const prevIndex = active;
-    setActive(index);
-
+    // Get button and content elements
     const buttonEl = buttonRefs.current[index];
     const contentEl = contentRefs.current[index];
     if (!buttonEl || !contentEl) return;
 
-    // Wait for the previous content to collapse, if any
-    if (prevIndex !== null) {
+    // Handle transition animations
+    const prevIndex = active;
+    if (prevIndex !== -1) {
       const prevContentEl = contentRefs.current[prevIndex];
       if (prevContentEl) {
         const onPrevTransitionEnd = (event: TransitionEvent) => {
           if (event.propertyName === "max-height") {
             prevContentEl.removeEventListener("transitionend", onPrevTransitionEnd);
-
-            // Wait one frame for new content to expand
+            // After previous content closes, wait one frame to expand new content
             requestAnimationFrame(() => {
-              // Scroll button into view
               buttonEl.scrollIntoView({ behavior: "smooth", block: "start" });
             });
           }
@@ -101,8 +98,7 @@ export default function Media() {
     const onNewTransitionEnd = (event: TransitionEvent) => {
       if (event.propertyName === "max-height") {
         contentEl.removeEventListener("transitionend", onNewTransitionEnd);
-
-        // Scroll button into view after layout update
+        // Scroll new button into view after the content expands
         requestAnimationFrame(() => {
           buttonEl.scrollIntoView({ behavior: "smooth", block: "start" });
         });
@@ -111,6 +107,16 @@ export default function Media() {
 
     contentEl.addEventListener("transitionend", onNewTransitionEnd);
   };
+
+  // -------------------- Handle Default Active for Desktop --------------------
+  useEffect(() => {
+    const isMobile = window.innerWidth < 768; // Detect mobile or desktop
+    if (!isMobile) {
+      setActive(0); // Default to first button for desktop
+    } else {
+      setActive(-1); // Keep all buttons closed on mobile
+    }
+  }, []); // Empty dependency ensures it runs once on load
 
   return (
     <section className="relative w-full min-h-screen bg-white overflow-hidden">
@@ -159,7 +165,7 @@ export default function Media() {
                   ref={(el) => {
                     buttonRefs.current[index] = el;
                   }}
-                  onClick={() => handleButtonClick(index)}
+                  onClick={() => handleButtonClick(index)} // Uses the updated handleButtonClick
                   className="w-full px-4 py-5 text-lg font-mono bg-[#eeeeee] flex items-center justify-between"
                 >
                   <span>{item.label}</span>
@@ -219,7 +225,7 @@ export default function Media() {
               className="text-4xl font-serif text-black drop-shadow-lg break-words"
               style={{ maxWidth: "80%", lineHeight: 1.2 }}
             >
-              {BUTTONS[active !== null ? active : 0].text}
+              {active !== -1 && BUTTONS[active].text} {/* Fix for undefined access */}
             </h2>
           </div>
 
@@ -230,7 +236,10 @@ export default function Media() {
         <nav
           ref={navRef}
           className="absolute top-0 left-0 right-0 z-50"
-          style={{ fontFamily: "Courier New, monospace", clipPath: "polygon(0 0, 100% 0, 85% 100%, 0 100%)" }}
+          style={{
+            fontFamily: "Courier New, monospace",
+            clipPath: "polygon(0 0, 100% 0, 85% 100%, 0 100%)",
+          }}
         >
           <div className="relative flex justify-start items-start px-4 md:px-6 pt-2 pb-4">
             <div className="flex flex-col text-black max-w-[calc(100%-50vw)]">
@@ -261,7 +270,7 @@ export default function Media() {
           </div>
         </nav>
 
-        {/* LEFT BUTTON STACK */}
+        {/* LEFT BUTTON STACK (DESKTOP) */}
         <div
           className="absolute left-0 z-10 flex flex-col overflow-y-auto"
           style={{ top: navHeight, bottom: 0, right: "51.8%" }}
@@ -269,8 +278,10 @@ export default function Media() {
           {BUTTONS.map((item, index) => (
             <div key={item.label}>
               <button
-                onClick={() => setActive(index)}
-                className="w-full text-2xl font-mono bg-[#eeeeee] hover:bg-gray-200 transition cursor-pointer"
+                onClick={() => setActive(index)} // Change the active button on click
+                className={`w-full text-2xl font-mono transition cursor-pointer ${
+                  active === index ? 'bg-[#DADCE3]' : 'bg-[#eeeeee]'
+                } hover:bg-gray-200`}
                 style={{ height: buttonHeight, minHeight: 80, maxHeight: 200 }}
               >
                 {item.label}
