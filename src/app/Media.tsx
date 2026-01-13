@@ -1,22 +1,34 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, ReactNode } from "react";
 import bgImage from "../assets/images/media-bg.png";
+import {
+  Background,
+  WhoWeAre,
+  OurMission,
+  WhatWeStandFor,
+  BehindTheScenes,
+  CommunityPartners,
+  GetInvolved,
+  MediaAndMentions
+} from "../data/mediaContent";
 
 interface ButtonItem {
   label: string;
-  text: string;
+  content: ReactNode;
 }
 
 const BUTTONS: ButtonItem[] = [
-  { label: "Who we are", text: "Content for Button 1" },
-  { label: "Our mission", text: "Content for Button 2" },
-  { label: "What we stand for", text: "Content for Button 3" },
-  { label: "What happens behind the scenes", text: "Content for Button 4" },
-  { label: "Community partners", text: "Content for Button 5" },
-  { label: "Get involved", text: "Content for Button 6" },
-  { label: "Mentions & media", text: "Content for Button 7" },
+  { label: "Overview", content: <Background /> },
+  { label: "Who we are", content: <WhoWeAre /> },
+  { label: "Our mission", content: <OurMission /> },
+  { label: "What we stand for", content: <WhatWeStandFor /> },
+  { label: "Behind the scenes", content: <BehindTheScenes /> },
+  { label: "Community partners", content: <CommunityPartners /> },
+  { label: "Get involved", content: <GetInvolved /> },
+  { label: "Mentions & media", content: <MediaAndMentions /> },
 ];
 
 const SEPARATOR_COLORS = [
+  "#88B3AF",
   "#88B3AF",
   "#6a8b88",
   "#618c88",
@@ -27,14 +39,13 @@ const SEPARATOR_COLORS = [
 ];
 
 export default function Media() {
-  const [active, setActive] = useState<number>(-1); // Initialize as -1 for mobile (no button selected initially)
+  const [active, setActive] = useState<number>(-1); // mobile: -1 means all closed
   const [navHeight, setNavHeight] = useState(0);
   const [buttonHeight, setButtonHeight] = useState(0);
   const navRef = useRef<HTMLDivElement | null>(null);
 
-  // Mobile button and content refs
   const buttonRefs = useRef<Array<HTMLButtonElement | null>>(BUTTONS.map(() => null));
-  const contentRefs = useRef<Array<HTMLDivElement | null>>(BUTTONS.map(() => null));
+  const contentWrapperRefs = useRef<Array<HTMLDivElement | null>>(BUTTONS.map(() => null));
 
   // -------------------- DESKTOP HEIGHT CALC --------------------
   useEffect(() => {
@@ -63,70 +74,55 @@ export default function Media() {
 
   // -------------------- MOBILE BUTTON CLICK --------------------
   const handleButtonClick = (index: number) => {
-    // Handle opening and closing of content on mobile
-    if (active === index) {
-      setActive(-1); // Close the currently active button
-    } else {
-      setActive(index); // Open the new button
-    }
-
-    // Get button and content elements
-    const buttonEl = buttonRefs.current[index];
-    const contentEl = contentRefs.current[index];
-    if (!buttonEl || !contentEl) return;
-
-    // Handle transition animations
     const prevIndex = active;
-    if (prevIndex !== -1) {
-      const prevContentEl = contentRefs.current[prevIndex];
-      if (prevContentEl) {
-        const onPrevTransitionEnd = (event: TransitionEvent) => {
-          if (event.propertyName === "max-height") {
-            prevContentEl.removeEventListener("transitionend", onPrevTransitionEnd);
-            // After previous content closes, wait one frame to expand new content
-            requestAnimationFrame(() => {
-              buttonEl.scrollIntoView({ behavior: "smooth", block: "start" });
-            });
-          }
-        };
-        prevContentEl.addEventListener("transitionend", onPrevTransitionEnd);
-        return;
+    const newIndex = prevIndex === index ? -1 : index;
+    setActive(newIndex);
+
+    const buttonEl = buttonRefs.current[index];
+    const wrapperEl = contentWrapperRefs.current[index];
+    if (!buttonEl || !wrapperEl) return;
+
+    // Collapse previous content if open
+    if (prevIndex !== -1 && prevIndex !== index) {
+      const prevWrapper = contentWrapperRefs.current[prevIndex];
+      if (prevWrapper) {
+        prevWrapper.style.maxHeight = "0px";
       }
     }
 
-    // No previous content or after collapse
-    const onNewTransitionEnd = (event: TransitionEvent) => {
-      if (event.propertyName === "max-height") {
-        contentEl.removeEventListener("transitionend", onNewTransitionEnd);
-        // Scroll new button into view after the content expands
-        requestAnimationFrame(() => {
-          buttonEl.scrollIntoView({ behavior: "smooth", block: "start" });
-        });
-      }
-    };
+    // Expand current content safely
+    requestAnimationFrame(() => {
+      if (newIndex !== -1) {
+        wrapperEl.style.maxHeight = "9999px"; // allow full height expansion
 
-    contentEl.addEventListener("transitionend", onNewTransitionEnd);
+        // Scroll into center after small delay so transition starts
+        setTimeout(() => {
+          const sectionEl = buttonEl.parentElement;
+          if (!sectionEl) return;
+          const rect = sectionEl.getBoundingClientRect();
+          const scrollTop = window.scrollY + rect.top - window.innerHeight / 2 + rect.height / 2;
+          window.scrollTo({ top: scrollTop, behavior: "smooth" });
+        }, 50);
+      }
+    });
   };
 
   // -------------------- Handle Default Active for Desktop --------------------
   useEffect(() => {
-    const isMobile = window.innerWidth < 768; // Detect mobile or desktop
+    const isMobile = window.innerWidth < 768;
     if (!isMobile) {
-      setActive(0); // Default to first button for desktop
+      setActive(0); // desktop default
     } else {
-      setActive(-1); // Keep all buttons closed on mobile
+      setActive(-1); // mobile default closed
     }
-  }, []); // Empty dependency ensures it runs once on load
+  }, []);
 
   return (
     <section className="relative w-full min-h-screen bg-white overflow-hidden">
       {/* ================= MOBILE LAYOUT ================= */}
       <div className="block md:hidden">
         {/* MOBILE NAVBAR */}
-        <nav
-          className="w-full px-4 pt-2 pb-4"
-          style={{ fontFamily: "Courier New, monospace" }}
-        >
+        <nav className="w-full px-4 pt-2 pb-4" style={{ fontFamily: "Courier New, monospace" }}>
           <h1 className="text-xl font-bold" style={{ lineHeight: 1.05 }}>
             Stats4Lulu Media Summaries
           </h1>
@@ -134,21 +130,14 @@ export default function Media() {
             Official statements from the Stats4Lulu team
           </h2>
 
-          <div
-            className="flex flex-wrap items-center gap-[0.4rem] text-sm mt-1 font-semibold italic text-black/75"
-            style={{ lineHeight: 1.05 }}
-          >
+          <div className="flex flex-wrap items-center gap-[0.4rem] text-sm mt-1 font-semibold italic text-black/75" style={{ lineHeight: 1.05 }}>
             <a href="mailto:stats4lulu@gmail.com">stats4lulu@gmail.com</a>
             <span className="text-black/40">•</span>
             <a href="https://discord.gg/hDuuFCtWbk" target="_blank" rel="noopener noreferrer">
               Join our Discord
             </a>
             <span className="text-black/40">•</span>
-            <a
-              href="https://docs.google.com/forms/d/e/1FAIpQLSeLFppQsFajVnM_QrxfphwQ-1EKnUKWgMMfBfga9yX3JkZ_9Q/viewform"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeLFppQsFajVnM_QrxfphwQ-1EKnUKWgMMfBfga9yX3JkZ_9Q/viewform" target="_blank" rel="noopener noreferrer">
               Bug Reports & Suggestions
             </a>
           </div>
@@ -158,43 +147,29 @@ export default function Media() {
         <div className="flex flex-col">
           {BUTTONS.map((item, index) => {
             const isOpen = active === index;
-
             return (
               <div key={item.label}>
                 <button
-                  ref={(el) => {
-                    buttonRefs.current[index] = el;
-                  }}
-                  onClick={() => handleButtonClick(index)} // Uses the updated handleButtonClick
+                  ref={(el) => (buttonRefs.current[index] = el)}
+                  onClick={() => handleButtonClick(index)}
                   className="w-full px-4 py-5 text-lg font-mono bg-[#eeeeee] flex items-center justify-between"
                 >
                   <span>{item.label}</span>
                   <span className="text-xl">{isOpen ? "v" : ">"}</span>
                 </button>
 
-                {/* Separator immediately after the button */}
-                <div
-                  className="w-full h-[6px]"
-                  style={{ backgroundColor: SEPARATOR_COLORS[index] }}
-                />
+                {/* Separator */}
+                <div className="w-full h-[6px]" style={{ backgroundColor: SEPARATOR_COLORS[index] }} />
 
+                {/* Accordion content wrapper */}
                 <div
-                  ref={(el) => {
-                    contentRefs.current[index] = el;
-                  }}
-                  className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                    isOpen ? "max-h-[400px]" : "max-h-0"
-                  }`}
+                  ref={(el) => (contentWrapperRefs.current[index] = el)}
+                  className="overflow-hidden transition-[max-height] duration-300 ease-in-out"
+                  style={{ maxHeight: isOpen ? "9999px" : "0px" }}
                 >
-                  <div className="relative h-[300px]">
-                    <img
-                      src={bgImage}
-                      alt=""
-                      className="absolute inset-0 h-full w-full object-cover"
-                    />
-                    <div className="relative z-10 p-4 text-lg font-serif text-black">
-                      {item.text}
-                    </div>
+                  <div className="relative p-4 pb-8 text-lg font-serif text-black">
+                    <img src="" alt="" className="absolute inset-0 h-full w-full object-cover pointer-events-none" />
+                    <div className="relative z-10">{item.content}</div>
                   </div>
                 </div>
               </div>
@@ -220,12 +195,19 @@ export default function Media() {
             }}
           />
 
-          <div className="absolute inset-0 flex items-center justify-start px-8 md:px-20">
-            <h2
-              className="text-4xl font-serif text-black drop-shadow-lg break-words"
-              style={{ maxWidth: "80%", lineHeight: 1.2 }}
-            >
-              {active !== -1 && BUTTONS[active].text} {/* Fix for undefined access */}
+          <div
+            className="absolute right-0 flex items-start justify-start overflow-y-auto pointer-events-auto"
+            style={{
+              top: navHeight,
+              bottom: "2rem",
+              left: "12%",
+              right: "1rem",
+              paddingLeft: "2rem",
+              paddingBottom: "2rem",
+            }}
+          >
+            <h2 className="text-lg font-serif text-black break-words">
+              {active !== -1 && BUTTONS[active].content}
             </h2>
           </div>
 
@@ -257,12 +239,7 @@ export default function Media() {
                   Join our Discord
                 </a>
                 <span className="text-black/40">•</span>
-                <a
-                  href="https://docs.google.com/forms/d/e/1FAIpQLSeLFppQsFajVnM_QrxfphwQ-1EKnUKWgMMfBfga9yX3JkZ_9Q/viewform"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-blue-200"
-                >
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSeLFppQsFajVnM_QrxfphwQ-1EKnUKWgMMfBfga9yX3JkZ_9Q/viewform" target="_blank" rel="noopener noreferrer" className="hover:text-blue-200">
                   Bug Reports & Suggestions
                 </a>
               </div>
@@ -278,9 +255,9 @@ export default function Media() {
           {BUTTONS.map((item, index) => (
             <div key={item.label}>
               <button
-                onClick={() => setActive(index)} // Change the active button on click
+                onClick={() => setActive(index)}
                 className={`w-full text-2xl font-mono transition cursor-pointer ${
-                  active === index ? 'bg-[#DADCE3]' : 'bg-[#eeeeee]'
+                  active === index ? "bg-[#DADCE3]" : "bg-[#eeeeee]"
                 } hover:bg-gray-200`}
                 style={{ height: buttonHeight, minHeight: 80, maxHeight: 200 }}
               >
