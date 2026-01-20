@@ -756,7 +756,7 @@ export const MediaAndMentions = () => {
                   }
                   className="px-2 py-1 text-white rounded-md cursor-pointer w-full text-center text-sm transition hover:opacity-90"
                   style={{
-                    backgroundColor: "#395752",
+                    backgroundColor: "#36454F",
                   }}
                 >
                   {text}
