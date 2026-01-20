@@ -225,7 +225,7 @@ export default function Media() {
                 >
                   <div className="relative p-4 pb-8 text-lg font-serif text-black">
                     <img
-                      src=""
+                      src={bgImage}
                       alt=""
                       className="absolute inset-0 h-full w-full object-cover pointer-events-none"
                     />
